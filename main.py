@@ -16,19 +16,24 @@ def load_config(path='config.json'):
 
 def build_allowed_functions(config):
     """Build dict of allowed math functions from config."""
-    return {name: getattr(math, name) for name in config.get("allowed_functions", [])}
+    allowed = {name: getattr(math, name) for name in config.get("allowed_functions", [])}
+    print("✅ Allowed functions:", allowed)
+    return allowed
+
 
 def print_welcome_message(config):
-    """Print welcome and instructions from config."""
+    """Print welcome,, and instructions from config."""
     print(config.get("welcome_message", "Welcome!"))
     for line in config.get("instructions", []):
         print(line)
     print()
 
-def evaluate_expression(expr, allowed_functions):
-    """Evaluate the user expression safely."""
+def evaluate_expression(expr, allowed):
+    """ Evaluate the user expression safely."""
     try:
-        return eval(expr, {"__builtins__": None}, {"math": math, **allowed_functions})
+        d = eval(expr, {"__builtins__": None}, {"math": math, **allowed})
+        print(d)
+        return  d
     except ZeroDivisionError:
         return "❌ Error: Division by zero is not allowed."
     except ValueError as ve:
@@ -42,7 +47,7 @@ def evaluate_expression(expr, allowed_functions):
 
 def main_loop(config):
     """Main input loop."""
-    allowed_functions = build_allowed_functions(config)
+    allowed = build_allowed_functions(config)
     exit_command = config.get("exit_command", "exit")
 
     print_welcome_message(config)
@@ -53,7 +58,7 @@ def main_loop(config):
             print("Thanks for using the calculator!")
             break
 
-        result = evaluate_expression(user_input, allowed_functions)
+        result = evaluate_expression(user_input, allowed)
         print(f"Result: {result}\n")
 
 if __name__ == '__main__':
