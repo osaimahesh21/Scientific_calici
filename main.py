@@ -23,7 +23,7 @@ def build_allowed_functions(config):
 
 def print_welcome_message(config):
     """Print welcome,, and instructions from config."""
-    print(config.get("welcome_message", "Welcome!"))
+    print(config.get("welcome_meessage", "Welcome!"))
     for line in config.get("instructions", []):
         print(line)
     print()
