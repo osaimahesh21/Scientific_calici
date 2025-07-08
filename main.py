@@ -39,7 +39,7 @@ def evaluate_expression(expr, allowed):
     try:
         expr = clean_expression(expr.strip())
         if '"' in expr or "'" in expr:
-            return "❌ It looks like you used quotes Ashok — please enter only numbers and math symbols, no text"
+            return "❌ It looks like you used quotes  — please enter only numbers and math symbols, no text"
 
 
         d = eval(expr, {"__builtins__": None}, {"math": math, **allowed})
